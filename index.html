@@ -11,27 +11,30 @@
             padding: 0;
             overflow: hidden;
             height: 100%;
+            font-family: 'Arial', sans-serif;
         }
         #particles-js {
             position: absolute;
             width: 100%;
             height: 100%;
-            background-color: #f7f7f7;
+            background-color: #0f0e0e;
         }
-        .snow-text {
+        .snowflake {
             position: absolute;
-            font-size: 1.5em;
+            top: -10%;
             color: #fff;
-            opacity: 0;
-            animation: snowFall 10s linear infinite;
+            font-size: 24px;
+            opacity: 0.8;
+            user-select: none;
+            animation: fall linear infinite;
         }
-        @keyframes snowFall {
+        @keyframes fall {
             0% {
-                transform: translateY(-100%) scale(0.5);
+                transform: translate3d(0, 0, 0) rotate(0deg);
                 opacity: 1;
             }
             100% {
-                transform: translateY(200%) scale(0.5);
+                transform: translate3d(100px, 100vh, 0) rotate(360deg);
                 opacity: 0;
             }
         }
@@ -41,29 +44,131 @@
     <div id="particles-js"></div>
 
     <script>
-        // 初始化粒子背景
         particlesJS("particles-js", {
-            /* particles.js 配置 */
+            "particles": {
+                "number": {
+                    "value": 50,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 4,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
         });
 
-        // 创建飘落的文字
-        function createSnowText() {
-            const text = document.createElement('div');
-            text.classList.add('snow-text');
-            text.innerText = '这里没什么好看的';
-            text.style.left = Math.random() * 100 + 'vw';
-            text.style.animationDuration = Math.random() * 5 + 5 + 's';
-            text.style.animationDelay = Math.random() * 5 + 's';
-            document.body.appendChild(text);
+        const snowflakes = [];
+        const numberOfSnowflakes = 10;
 
-            // 动画结束后移除文本
-            text.addEventListener('animationend', () => {
-                text.remove();
+        for (let i = 0; i < numberOfSnowflakes; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.textContent = '这里没什么好看的';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 10 + 5 + 's';
+            snowflake.style.animationDelay = Math.random() * 5 + 's';
+            snowflake.style.fontSize = Math.random() * 2 + 1 + 'em';
+            snowflake.style.animationTimingFunction = 'linear';
+            document.body.appendChild(snowflake);
+            snowflakes.push(snowflake);
+
+            snowflake.addEventListener('animationend', () => {
+                snowflake.remove();
             });
         }
-
-        // 每隔一段时间添加新的飘落文字
-        setInterval(createSnowText, 200);
     </script>
 </body>
 </html>
