@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎访问</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #f7f7f7;
+        }
+        .snow-text {
+            position: absolute;
+            font-size: 1.5em;
+            color: #fff;
+            opacity: 0;
+            animation: snowFall 10s linear infinite;
+        }
+        @keyframes snowFall {
+            0% {
+                transform: translateY(-100%) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(200%) scale(0.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <script>
+        // 初始化粒子背景
+        particlesJS("particles-js", {
+            /* particles.js 配置 */
+        });
+
+        // 创建飘落的文字
+        function createSnowText() {
+            const text = document.createElement('div');
+            text.classList.add('snow-text');
+            text.innerText = '这里没什么好看的';
+            text.style.left = Math.random() * 100 + 'vw';
+            text.style.animationDuration = Math.random() * 5 + 5 + 's';
+            text.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(text);
+
+            // 动画结束后移除文本
+            text.addEventListener('animationend', () => {
+                text.remove();
+            });
+        }
+
+        // 每隔一段时间添加新的飘落文字
+        setInterval(createSnowText, 200);
+    </script>
+</body>
+</html>
